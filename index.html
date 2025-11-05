@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>OSSKANSA – OSIS SMK NEGERI 1 Simpang Empat</title>
+  <meta name="description" content="Website resmi organisasi OSIS OSSKANSA SMK NEGERI 1 Simpang Empat. Tentang, Artikel, dan Galeri dalam satu halaman." />  <!-- FAVICON (opsional) -->  <link rel="icon" href="img/logo.png" />  <style>
+    /* ====== DESIGN TOKENS ====== */
+    :root {
+      --bg-deep: #0b1b3b;        /* biru malam utama */
+      --bg-deeper: #08132a;      /* variasi lebih gelap */
+      --primary: #1a4eff;        /* aksen biru */
+      --primary-soft: #a8c5ff;   /* aksen lembut */
+      --surface: #ffffff;        /* putih */
+      --muted: #e9eef8;          /* abu lembut */
+      --text: #0d1222;           /* teks gelap untuk surface terang */
+      --text-on-dark: #f6f8ff;   /* teks terang pada gelap */
+      --shadow: 0 10px 30px rgba(0,0,0,.15);
+      --radius: 18px;
+      --radius-lg: 24px;
+      --maxw: 1100px;
+      --pad: clamp(16px, 3vw, 28px);
+    }
+
+    /* ====== GLOBAL ====== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-deeper) 50%, var(--bg-deep) 100%);
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ====== ACCESSIBILITY ====== */
+    .skip-link{
+      position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+    }
+    .skip-link:focus{ left: 12px; top: 12px; width:auto; height:auto; padding:8px 12px; background:var(--surface); border-radius:10px; box-shadow: var(--shadow); }
+
+    /* ====== NAVBAR ====== */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(90deg, rgba(11,27,59,.75), rgba(8,19,42,.75));
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .nav {
+      max-width: var(--maxw); margin: 0 auto; padding: 10px var(--pad);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .brand {
+      display:flex; align-items:center; gap:10px; color: var(--text-on-dark);
+      font-weight: 700; letter-spacing: .3px;
+    }
+    .brand-logo { 
+      width: 38px; height: 38px; border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, var(--primary) 0%, #183aa2 40%, #0a1a44 70%);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,.08), 0 6px 16px rgba(0,0,0,.35);
+      flex: 0 0 auto;
+    }
+    .brand-text { font-size: 15px; line-height: 1.2; }
+    .brand-text strong { display:block; font-size: 16px; }
+
+    nav { margin-left: auto; }
+    .menu { list-style: none; display:flex; gap: clamp(10px, 3vw, 22px); padding:0; margin:0; }
+    .menu a {
+      color: var(--text-on-dark);
+      padding: 10px 14px; border-radius: 999px; opacity: .9;
+      transition: opacity .2s ease, background .2s ease, transform .2s ease;
+    }
+    .menu a:hover { opacity: 1; background: rgba(255,255,255,.06); }
+    .menu a.active { background: rgba(26,78,255,.18); box-shadow: inset 0 0 0 1px rgba(168,197,255,.3); }
+
+    /* ====== HERO / HALAMAN ====== */
+    .section {
+      max-width: var(--maxw); margin: 0 auto; padding: clamp(48px, 9vw, 96px) var(--pad);
+    }
+    .hero {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(20px, 5vw, 42px);
+      align-items: center; color: var(--text-on-dark);
+    }
+    .hero h1 {
+      font-size: clamp(30px, 5vw, 50px);
+      line-height: 1.1; margin: 0 0 12px 0;
+    }
+    .hero p { margin: 0 0 22px 0; opacity: .92; }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg);
+      padding: clamp(16px, 3vw, 22px);
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+    }
+    .hero .cta {
+      display:flex; gap: 12px; flex-wrap: wrap;
+    }
+    .btn {
+      display:inline-flex; align-items:center; gap:10px; border-radius: 999px; padding: 12px 18px; font-weight: 600; letter-spacing:.2px;
+      box-shadow: var(--shadow);
+    }
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-ghost { background: rgba(255,255,255,.08); color: var(--text-on-dark); }
+
+    /* ====== SECTION WRAPPERS ====== */
+    .wrap-dark { color: var(--text-on-dark); }
+    .wrap-light { background: var(--surface); color: var(--text); border-top-left-radius: var(--radius-lg); border-top-right-radius: var(--radius-lg); }
+
+    /* ====== TENTANG ====== */
+    .about {
+      display:grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 4vw, 36px);
+    }
+    .kartu {
+      background: var(--surface); border: 1px solid var(--muted);
+      border-radius: var(--radius);
+      padding: 18px; box-shadow: var(--shadow);
+    }
+    .kartu h3 { margin-top: 0; }
+
+    /* ====== ARTIKEL ====== */
+    .articles { display:grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .card-article {
+      background: var(--surface); border: 1px solid var(--muted); border-radius: var(--radius);
+      overflow: hidden; display:flex; flex-direction: column; box-shadow: var(--shadow);
+    }
+    .card-article img { aspect-ratio: 16 / 9; object-fit: cover; }
+    .card-body { padding: 16px; }
+    .badge { display:inline-block; font-size: 12px; padding: 6px 10px; border-radius: 999px; background: #eef3ff; color: #183aa2; }
+
+    /* ====== GALERI ====== */
+    .gallery { display:grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .gal {
+      position:relative; border-radius: 14px; overflow:hidden; border:1px solid var(--muted); background: #f2f6ff;
+    }
+    .gal img { width:100%; height:200px; object-fit:cover; filter:saturate(.98); }
+    .gal::after{
+      content:""; position:absolute; inset:0; background:linear-gradient( to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,.2) 100%);
+      opacity:0; transition: opacity .25s ease;
+    }
+    .gal:hover::after{ opacity:.7; }
+
+    /* ====== FOOTER ====== */
+    footer{ color: var(--text-on-dark); opacity:.9; border-top: 1px solid rgba(255,255,255,.08); }
+    .foot { max-width: var(--maxw); margin: 0 auto; padding: 24px var(--pad) 60px; font-size: 14px; }
+
+    /* ====== SCROLL REVEAL (CSS part) ====== */
+    .reveal { opacity: 0; transform: translateY(18px); }
+    .reveal.show { opacity: 1; transform: translateY(0); transition: transform .6s ease, opacity .6s ease; }
+
+    /* ====== MEDIA ====== */
+    @media (max-width: 900px){
+      .hero{ grid-template-columns: 1fr; }
+      .about { grid-template-columns: 1fr; }
+      .articles { grid-template-columns: 1fr 1fr; }
+      .gallery { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px){
+      .articles { grid-template-columns: 1fr; }
+      .gallery { grid-template-columns: 1fr; }
+      .brand-text strong { font-size: 15px; }
+      .menu { gap: 6px; }
+      .menu a { padding: 8px 10px; font-size: 14px; }
+    }
+  </style></head>
+<body>
+  <a href="#halaman" class="skip-link">Lewati ke konten</a>  <!-- NAV -->  <header aria-label="Navigasi utama">
+    <div class="nav">
+      <div class="brand" aria-label="OSSKANSA">
+        <div class="brand-logo" aria-hidden="true"></div>
+        <div class="brand-text"><strong>OSSKANSA</strong><span>OSIS SMKN 1 Simpang Empat</span></div>
+      </div>
+      <nav>
+        <ul class="menu" role="list">
+          <li><a href="#halaman" class="link">Halaman</a></li>
+          <li><a href="#tentang" class="link">Tentang</a></li>
+          <li><a href="#artikel" class="link">Artikel</a></li>
+          <li><a href="#galeri" class="link">Galeri</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>  <!-- HERO / HALAMAN -->  <section id="halaman" class="section wrap-dark" aria-label="Halaman">
+    <div class="hero">
+      <div>
+        <h1 class="reveal">OSSKANSA – OSIS SMK NEGERI 1 Simpang Empat</h1>
+        <p class="reveal">Ruang kolaborasi siswa untuk berkarya, memimpin, dan menginspirasi. Dengan semangat kebersamaan, kami menghadirkan program positif bagi sekolah dan masyarakat.</p>
+        <div class="cta reveal" style="margin-top:8px">
+          <a href="#tentang" class="btn btn-primary">Kenali Kami</a>
+          <a href="#artikel" class="btn btn-ghost">Baca Artikel</a>
+        </div>
+      </div>
+      <div class="hero-card reveal" aria-label="Highlight Program">
+        <h3 style="margin-top:0;color:var(--text-on-dark)">Program Unggulan 2025</h3>
+        <ul style="margin:0; padding-left: 18px; color: var(--text-on-dark)">
+          <li>OSSKANSA Peduli: Aksi sosial dan literasi digital</li>
+          <li>Pekan Kreativitas Siswa: Pamer karya & lomba minat bakat</li>
+          <li>Green School Movement: Gerakan lingkungan berkelanjutan</li>
+        </ul>
+      </div>
+    </div>
+  </section>  <!-- TENTANG -->  <section id="tentang" class="section wrap-light" aria-label="Tentang OSSKANSA">
+    <h2 class="reveal" style="margin-top:0">Tentang Kami</h2>
+    <p class="reveal" style="max-width: 760px">OSSKANSA adalah organisasi siswa intra sekolah (OSIS) di SMK NEGERI 1 Simpang Empat yang bertujuan mewadahi aspirasi, mengembangkan kepemimpinan, dan menguatkan budaya positif sekolah melalui program terstruktur dan kolaboratif. Berkomitmen membangun karakter, meningkatkan prestasi, serta menjadi rumah kebersamaan bagi seluruh peserta didik. Kami merangkul setiap ekstrakurikuler sebagai bagian dari keluarga besar sekolah, untuk bersama-sama tumbuh, berkarya, dan berkontribusi positif bagi lingkungan sekolah maupun masyarakat.
+</p>
+    <div class="about" style="margin-top: 16px">
+      <div class="kartu reveal">
+        <h3>Visi</h3>
+        <p>Mewujudkan siswa SMKN 1 Simpang Empat yang berkarakter, kreatif, dan kolaboratif dengan semangat kepemimpinan yang berakhlak.</p>
+      </div>
+      <div class="kartu reveal">
+        <h3>Misi</h3>
+        <ul style="margin:0; padding-left:18px">
+          <li>Mengadakan program kepemimpinan dan pelayanan siswa.</li>
+          <li>Mendorong literasi, prestasi, dan minat bakat.</li>
+          <li>Membangun budaya disiplin, peduli, dan inovatif.</li>
+        </ul>
+      </div>
+    </div>
+  </section>  <!-- ARTIKEL -->  <section id="artikel" class="section wrap-light" style="background: #f7f9ff" aria-label="Artikel">
+    <h2 class="reveal" style="margin-top:0">Artikel Terbaru</h2>
+    <div class="articles" style="margin-top: 10px">
+      <!-- Artikel 1 -->
+      <article class="card-article reveal">
+        <img src="image/logo.jpg" alt="Logo Kebanggaan OSSKANSA" loading="lazy" />
+        <div class="card-body">
+          <span class="badge">Icon</span>
+          <h3 style="margin:10px 0 6px">Logo Kebanggan OSSKANSA</h3>
+          <p>Icon Milik OSSKANSA melambangkan semangat persatuan, kreativitas, dan prestasi siswa SMK Negeri 1 Simpang Empat.</p>
+        </div>
+      </article>
+      <!-- Artikel 2 -->
+      <article class="card-article reveal">
+        <img src="image/pembina.jpg" alt="PEMBINA OSSKANSA" loading="lazy" />
+        <div class="card-body">
+          <span class="badge">Pengurus</span>
+          <h3 style="margin:10px 0 6px">PEMBINA OSSKANSA</h3>
+          <p>Ibu Ni Putu Sri Wahyuni, S.Pd Selaku Pembina OSIS Yang Berperan Penting Dalam Keorganisasian.</p>
+        </div>
+      </article>
+      <!-- Artikel 3 -->
+      <article class="card-article reveal">
+        <img src="image/hst.jpg" alt="Pekan kreativitas siswa" loading="lazy" />
+        <div class="card-body">
+          <span class="badge">Kreativitas</span>
+          <h3 style="margin:10px 0 6px">Pekan Kreativitas Siswa</h3>
+          <p>Rapat untuk Ajang School Talent oleh HONDA Trio Motor dan OSSKANSA.</p>
+        </div>
+      </article>
+      <!-- Artikel 4 -->
+      <article class="card-article reveal">
+        <img src="image/pemilos.JPG" alt="Demokrasi siswa" loading="lazy" />
+        <div class="card-body">
+          <span class="badge">Ceremonial</span>
+          <h3 style="margin:10px 0 6px">Demokrasi siswa</h3>
+          <p>Debat Ketos & WaKetos untuk periode 2025/2026 yang dilaksanakan di aula SMK NEGERI 1 Simpang Empat.</p>
+        </div>
+      </article>
+    </div>
+  </section>  <!-- GALERI -->  <section id="galeri" class="section wrap-light" aria-label="Galeri">
+    <h2 class="reveal" style="margin-top:0">Galeri</h2>
+    <p class="reveal" style="max-width:760px">Dokumentasi kegiatan OSSKANSA.</p>
+    <div class="gallery" style="margin-top:10px">
+      <figure class="gal reveal">
+        <img src="image/osskansa1.jpg" alt="Upacara bendera HUT RI-80" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa2.jpg" alt="Panitia Lomba Agustusan" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa3.jpg" alt="Lomba HONDA SCHOOL TALENT" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa4.jpg" alt="Kebersamaan" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa5.jpg" alt="Evaluasi" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa6.jpg" alt="Foto bersama.penyelenggara/panitia HONDA SCHOOL TALENT" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa7.jpg" alt="Latihan Dasar Kepemimpinan" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa8.jpg" alt="Panitia Pelaksana HST" loading="lazy" />
+      </figure>
+      <figure class="gal reveal">
+        <img src="image/osskansa9.jpg" alt="Panitia Pelaksana HST" loading="lazy" />
+      </figure>
+    </div>
+  </section>  <!-- FOOTER -->  <footer>
+    <div class="foot">
+      <div>© <span id="y"></span> OSSKANSA – OSIS SMK NEGERI 1 Simpang Empat. Semua hak cipta dilindungi.</div>
+      <div style="opacity:.8; margin-top:6px"></div>
+    </div>
+  </footer>  <script>
+    // ====== YEAR ======
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // ====== ACTIVE NAV LINK ON SCROLL ======
+    const links = document.querySelectorAll('.menu .link');
+    const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
+
+    const setActive = () => {
+      const pos = window.scrollY + 120; // offset header
+      sections.forEach((sec, i) => {
+        if (!sec) return;
+        const top = sec.offsetTop, bottom = top + sec.offsetHeight;
+        if (pos >= top && pos < bottom) {
+          links.forEach(l => l.classList.remove('active'));
+          links[i].classList.add('active');
+        }
+      });
+    };
+    window.addEventListener('scroll', setActive, { passive: true });
+    window.addEventListener('load', setActive);
+
+    // ====== SCROLL REVEAL (minimal, hormati preferensi pengguna) ======
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced && 'IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    } else {
+      // jika user tidak ingin animasi / browser lama
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+    }
+  </script></body>
+</html>
